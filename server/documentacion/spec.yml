@@ -1,0 +1,140 @@
+openapi: 3.0.0
+info: 
+  title: delilah Restó API
+  description: pedidos para un retaurante
+  version: 1.0.0
+  contact:
+    name: Brigite Romero / mateo rodriguez
+    email: mateo.rodriguez.fierro@gmail.com 
+    
+
+servers:
+  - url: http://localhost:3300
+    description: desarrollo 
+    variables:
+      port:
+        default: '3300'
+  - url: https://delilahresto.com
+    description: produccion
+  - url: https://dev.delilahResto.com
+    description: staging
+tags:
+  - name: pedidos
+    description: pedidos de los usuarios y admin
+  - name: productos
+    description: productos de la base de datos
+  - name: usuarios
+    description: admin y usuario
+
+paths:
+  
+  /usuarios:
+    post:
+      tags:
+        - usuarios
+      summary: Crear usuario
+      description: crearlos enla BD cuando se registren
+      operationId: CrearUsuario
+      responses:
+        200: 
+          description: se creo el usuario
+        400:
+          description: no se pudo validar los datos ingresados
+        
+    get:
+      tags:
+        - usuarios
+      summary: muestra datos de usuario o que el admin muestra lista de usuarios
+      operationId: tomarInfo
+      responses:
+        200:
+          description: exito en la toma de datos!
+        401:
+          description: no autorizado
+        404:
+          description: no encontrado
+    put:
+      tags:
+        - usuarios
+      summary: edita datos activos del usuario
+      responses:
+        200:
+          description: operacion exitosa
+        400:
+          description: contraseña/usuario invalidos
+        404:
+          description: no encontrado
+    delete:
+      tags:
+        - usuarios
+      summary: quita usuarios activos o no activos
+      responses:
+        200:
+          description: operacion exitosa
+        404:
+          description: no encontrado
+        400: 
+          description: usuario no pudo quitar su cuenta
+
+  /usuarios/inicioSesion:
+    get:
+      tags:
+        - usuario
+      summary: Dejara entrar al usuario
+      operationId: inicioId
+      parameters:
+      - name: nombre de usuario oemail
+        in: query
+        description: tomara usuario o email para inicio de ses
+        required: true
+        schema:
+          type: string
+      - name: contraseña
+        in: query
+        description: La contraseña para inicio debe ser limpio
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: operacion exitosa
+        400: 
+          description: contraseña/usuario invalida
+  /usuarios/ :nombreDeUsuario:
+    get:
+      tags:
+        - usuarios
+      summary: tomar nombres de usuarios (admin)
+      operationId: tomarNombres
+      parameters:
+      - name: username
+        in: path
+        description: se obtendra los nombre en la bd
+        required: true
+        schema:  
+          type: string
+      responses:
+          200:
+            description: operacion exitosa
+          404:
+            description: no permitido
+  
+  /productos:
+    get:
+      description: obtiene lista de productos
+      responses:
+        200:
+          description: succes request
+          content:
+            'aplication/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#'
+
+
+
+
+
+
+
