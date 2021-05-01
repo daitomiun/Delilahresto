@@ -1,0 +1,175 @@
+openapi: 3.0.0
+
+info:
+  title: Delilah Resto
+  description: API para pedidos de comida deliciosa. Como cliente, podras registrarte, ver el listado de nuestros productos y realizar una orden. Los administradores del restaurante tienen la posibilidad de recibir pedidos y actualizarlos.
+  version: 1.0.0
+
+servers: 
+  - description: ServidorLocal
+    url: http://localhost:3000
+
+paths:
+  /register:
+    post:
+      tags:
+      - Users
+      description: Agregar un nuevo usuario
+      responses:
+        201:
+          description: succes post
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {'mesagge': user created successfully}
+        400:
+          description: invalid syntax
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {'message': invalid syntax}
+      requestBody:
+        content:
+          'application/json':
+             schema:
+              type: array
+              items:
+                properties:
+                  usuario:
+                    type: string
+                    example: queen_freddie
+                  nombre y apellido:
+                    type: string
+                    example: Freddie Mercury
+                  email:
+                    type: string
+                    example: freddiemercury@email.com
+                  telefono:
+                    type: integer
+                    example: +44 7712345678
+                  direccion:
+                    type: string
+                    example: 1 Logan PIKensington, London W8 6DE
+                  contraseña: 
+                    type: string
+                    example: freddymercurie123
+  /login:
+    post:
+      tags:
+      - Users
+      description: Iniciar sesión
+      responses:
+        200:
+          description: correct login
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {'mesagge': login successfully}
+        400:
+          description: invalid syntax
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {'message': invalid syntax}
+        404:
+          description: non-existent user
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {'message': non-existent user}
+      requestBody:
+        content:
+          'application/json':
+             schema:
+              type: array
+              items:
+                properties:
+                  usuario:
+                    type: string
+                    example: freddiemercury@email.com
+                  contraseña:
+                    type: string
+                    example: freddymercurie123
+  /favoritos:
+    get:
+      tags:
+      - Users
+      description: obtiene la lista de favoritos
+      responses:
+        200:
+          description: succes request
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      example: 10
+                    plato:
+                      type: string
+                      example: Bagel de salmón
+                    restaurante:
+                      type: string
+                      example: El rincón del pacifico
+                    precio:
+                      type: integer
+                      example: 15000
+        404:
+          description: no favorites
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {'message': no favorites}
+    post:
+      tags:
+      - Users
+      description: Agregar favoritos
+      responses:
+        201:
+          description: succes request
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {'mesagge': succes request}
+        400:
+          description: invalid syntax
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {'message': invalid syntax}
+        404:
+          description: non-existent plate
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {'message': non-existent plate}
+      requestBody:
+        content:
+          'application/json':
+             schema:
+              type: array
+              items:
+                properties:
+                  id:
+                    type: integer
+                    example: 10
+                  plato:
+                    type: string
+                    example: Bagel de salmón
+                  restaurante:
+                    type: string
+                    example: El rincón del pacifico
+                  precio:
+                    type: integer
+                    example: 15000      
