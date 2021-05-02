@@ -1,7 +1,8 @@
 openapi: 3.0.0
-info: 
-  title: delilah Restó API
-  description: pedidos para un retaurante
+
+info:
+  title: Delilah Resto
+  description: API para pedidos de comida deliciosa. Como cliente, podras registrarte, ver el listado de nuestros productos y realizar una orden. Los administradores del restaurante tienen la posibilidad de recibir pedidos y actualizarlos.
   version: 1.0.0
   contact:
     name: Brigite Romero / mateo rodriguez
@@ -10,7 +11,7 @@ info:
 
 servers:
   - url: http://localhost:3300
-    description: desarrollo 
+    description: ServidorLocal
     variables:
       port:
         default: '3300'
@@ -29,18 +30,6 @@ tags:
 paths:
   
   /usuarios:
-    post:
-      tags:
-        - usuarios
-      summary: Crear usuario
-      description: crearlos enla BD cuando se registren
-      operationId: CrearUsuario
-      responses:
-        200: 
-          description: se creo el usuario
-        400:
-          description: no se pudo validar los datos ingresados
-        
     get:
       tags:
         - usuarios
@@ -49,10 +38,25 @@ paths:
       responses:
         200:
           description: exito en la toma de datos!
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {'mesagge': Exito en la toma de datos} 
         401:
           description: no autorizado
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {'mesagge': No autorizado}
         404:
           description: no encontrado
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {'mesagge': No encontrado}
     put:
       tags:
         - usuarios
@@ -60,10 +64,25 @@ paths:
       responses:
         200:
           description: operacion exitosa
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {'mesagge': Operacion exitosa} 
         400:
           description: contraseña/usuario invalidos
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {'mesagge': Contraseña/usuario invalidos}
         404:
           description: no encontrado
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {'mesagge': No encontrado}
     delete:
       tags:
         - usuarios
@@ -71,36 +90,114 @@ paths:
       responses:
         200:
           description: operacion exitosa
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {'mesagge': Operacion exitosa} 
         404:
           description: no encontrado
-        400: 
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {'mesagge': No encontrado}
+        400:
           description: usuario no pudo quitar su cuenta
-
-  /usuarios/inicioSesion:
-    get:
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {'mesagge': Usuario no pudo quitar su cuenta}
+  /usuarios/login:
+    post:
       tags:
         - usuario
-      summary: Dejara entrar al usuario
+      summary: Dejará entrar al usuario
       operationId: inicioId
-      parameters:
-      - name: nombre de usuario oemail
-        in: query
-        description: tomara usuario o email para inicio de ses
-        required: true
-        schema:
-          type: string
-      - name: contraseña
-        in: query
-        description: La contraseña para inicio debe ser limpio
-        required: true
-        schema:
-          type: string
       responses:
         200:
-          description: operacion exitosa
-        400: 
-          description: contraseña/usuario invalida
-  /usuarios/ :nombreDeUsuario:
+          description: correct login
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {'mesagge': login successfully}
+        400:
+          description: invalid syntax
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {'message': invalid syntax}
+        404:
+          description: non-existent user
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {'message': non-existent user}
+      requestBody:
+        content:
+          'application/json':
+             schema:
+              type: array
+              items:
+                properties:
+                  usuario:
+                    type: string
+                    example: freddiemercury@email.com
+                  contraseña:
+                    type: string
+                    example: freddymercurie123
+  /usuarios/register:
+    post:
+      tags:
+        - usuarios
+      summary: Crear usuario
+      description: crearlos enla BD cuando se registren
+      operationId: CrearUsuario
+      responses:
+        201:
+          description: succes post
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {'mesagge': user created successfully}
+        400:
+          description: invalid syntax
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {'message': invalid syntax}
+      requestBody:
+        content:
+          'application/json':
+             schema:
+              type: array
+              items:
+                properties:
+                  usuario:
+                    type: string
+                    example: queen_freddie
+                  nombre y apellido:
+                    type: string
+                    example: Freddie Mercury
+                  email:
+                    type: string
+                    example: freddiemercury@email.com
+                  telefono:
+                    type: integer
+                    example: +44 7712345678
+                  direccion:
+                    type: string
+                    example: 1 Logan PIKensington, London W8 6DE
+                  contraseña: 
+                    type: string
+                    example: freddymercurie123
+  /usuarios/:nombreDeUsuario:
     get:
       tags:
         - usuarios
@@ -131,10 +228,3 @@ paths:
                 type: array
                 items:
                   $ref: '#'
-
-
-
-
-
-
-
