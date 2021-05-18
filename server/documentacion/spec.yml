@@ -112,6 +112,7 @@ paths:
   /usuarios/login:
     post:
       tags:
+        - usuarios
       summary: Dejará entrar al usuario
       operationId: inicioId
       responses:
@@ -335,9 +336,6 @@ paths:
               schema:
                 type: object
                 example: {'mesagge': platos ya recibidos del usuario}
-        201:
-          description:  se ha recibido por primera vez un pedido de este usuario
-                example: {'mesagge': succes request}
         400:
           description: invalid syntax
           content:
@@ -345,9 +343,6 @@ paths:
               schema:
                 type: object
                 example: {'mesagge': felicitaciones por haber hecho tu primer pedido!}
-        400:
-          description: hubo un error de parte del usuario
-                example: {'message': invalid syntax}
         404:
           description: non-existent plate
           content:
@@ -420,32 +415,22 @@ paths:
                               schema:
                                 type: object
                                 example: {'mesagge': platos no añadidos}
-             
-                            
-
-                      
-            
-
-
-
-
-                example: {'message': non-existent plate}
-      requestBody:
-        content:
-          'application/json':
-             schema:
-              type: array
-              items:
-                properties:
-                  id:
-                    type: integer
-                    example: 10
-                  plato:
-                    type: string
-                    example: Bagel de salmón
-                  restaurante:
-                    type: string
-                    example: El rincón del pacifico
-                  precio:
-                    type: integer
-                    example: 15000     
+              requestBody:
+                content:
+                  'application/json':
+                      schema:
+                        type: array
+                        items:
+                          properties:
+                            id:
+                              type: integer
+                              example: 10
+                            plato:
+                              type: string
+                              example: Bagel de salmón
+                            restaurante:
+                              type: string
+                              example: El rincón del pacifico
+                            precio:
+                              type: integer
+                              example: 15000     
