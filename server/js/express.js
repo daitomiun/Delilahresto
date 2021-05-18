@@ -11,7 +11,7 @@ import.
 
 app.get('/', function(req,res){
     res.send('hello ')
-    res.send(cool_images.generate())
+    
 
 });
 

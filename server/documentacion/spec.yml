@@ -14,7 +14,7 @@ servers:
     description: ServidorLocal
     variables:
       port:
-        default: '3300'
+        default: '3306'
   - url: https://delilahresto.com
     description: produccion
   - url: https://dev.delilahResto.com
@@ -112,7 +112,6 @@ paths:
   /usuarios/login:
     post:
       tags:
-        - usuario
       summary: Dejará entrar al usuario
       operationId: inicioId
       responses:
@@ -215,19 +214,78 @@ paths:
             description: operacion exitosa
           404:
             description: no permitido
-  
-  /productos:
+  /pedidos:
     get:
+      tags:
+        - pedidos
       description: obtiene lista de productos
       responses:
-        200:
-          description: succes request
+        201:
+          description: succes post
           content:
             'aplication/json':
               schema:
                 type: array
                 items:
                   $ref: '#'
+        400:
+          description: no permitido/ encontrado
+          content:
+            'aplication/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#'
+    put:
+      tags:
+        - pedidos
+      description: añade productos al usuario
+      responses:
+        200:
+          description: succes request
+          content:
+             'aplication/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#'
+        400:
+            description: no permitido/ encontrado
+            content:
+              'aplication/json':
+                schema:
+                  type: array
+                  items:
+                    $ref: '#'
+    delete:
+      tags:
+        - pedidos
+      description: quita productos añadidos del usuarios
+      responses:
+        200:
+          description: deleted succuesfully
+          content:
+            'aplication/json':
+                schema:
+                  type: array
+                  items:
+                    $ref: '#'
+        400:
+          description: no quito productos/error
+          content:
+              'aplication/json':
+                  schema:
+                    type: array
+                    items:
+                      $ref: '#'   
+  /pedidos/:transaccion-hecha:
+    post:
+      tags:
+        - pedidos
+      description: se tomara todo lo que el usuario pidio, y se guardara en la bd
+      responses:
+        200:
+          description:  se ha recibido tu pedido
   /usuarios/favoritos:
     get:
       tags:
@@ -276,6 +334,9 @@ paths:
             'application/json':
               schema:
                 type: object
+                example: {'mesagge': platos ya recibidos del usuario}
+        201:
+          description:  se ha recibido por primera vez un pedido de este usuario
                 example: {'mesagge': succes request}
         400:
           description: invalid syntax
@@ -283,6 +344,9 @@ paths:
             'application/json':
               schema:
                 type: object
+                example: {'mesagge': felicitaciones por haber hecho tu primer pedido!}
+        400:
+          description: hubo un error de parte del usuario
                 example: {'message': invalid syntax}
         404:
           description: non-existent plate
@@ -290,6 +354,81 @@ paths:
             'application/json':
               schema:
                 type: object
+                example: {'mesagge': platos no recibidos del usuario por complicaciones}
+  /productos:
+      get:
+        tags:
+          - productos
+        description: toma los datos de los platos en la BD
+        responses:
+            200:
+              description:  se tomaron los datos del plato
+              content:
+                'application/json':
+                  schema:
+                    type: object
+                    example: {'mesagge': platos recibidos}
+            404:
+                description:  hubo complicaciones al tomar los platos
+                content:
+                  'application/json':
+                    schema:
+                      type: object
+                      example: {'mesagge': platos no encontrados}
+      delete:
+              tags:
+                - productos
+              description: borra platos en la base de datos
+              responses:
+                  200:
+                    description:  se borro el plato
+                    content:
+                      'application/json':
+                        schema:
+                          type: object
+                          example: {'mesagge': platos borrados}
+                  400:
+                          description:  no se borraron los datos por complicaciones
+                          content:
+                            'application/json':
+                              schema:
+                                type: object
+                                example: {'mesagge': platos no borrados}
+                  404:
+                      description:  hubo complicaciones al borrar los platos
+                      content:
+                        'application/json':
+                          schema:
+                            type: object
+                            example: {'mesagge': platos no encontrados}
+      post:
+              tags:
+                - productos
+              description: añade platos en la base de datos
+              responses:
+                  200:
+                    description:  se añadio el plato
+                    content:
+                      'application/json':
+                        schema:
+                          type: object
+                          example: {'mesagge': platos borrados}
+                  400:
+                          description:  no se añadieron los datos por complicaciones
+                          content:
+                            'application/json':
+                              schema:
+                                type: object
+                                example: {'mesagge': platos no añadidos}
+             
+                            
+
+                      
+            
+
+
+
+
                 example: {'message': non-existent plate}
       requestBody:
         content:
@@ -309,4 +448,4 @@ paths:
                     example: El rincón del pacifico
                   precio:
                     type: integer
-                    example: 15000      
+                    example: 15000     
