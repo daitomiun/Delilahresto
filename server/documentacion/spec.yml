@@ -433,4 +433,4 @@ paths:
                               example: El rincón del pacifico
                             precio:
                               type: integer
-                              example: 15000     
+                              example: 15000
