@@ -112,7 +112,6 @@ paths:
   /usuarios/login:
     post:
       tags:
-        - usuarios
       summary: Dejará entrar al usuario
       operationId: inicioId
       responses:
@@ -287,6 +286,50 @@ paths:
       responses:
         200:
           description:  se ha recibido tu pedido
+  /usuarios/favoritos:
+    get:
+      tags:
+        - usuarios
+      summary: Obtener favoritos
+      description: obtiene la lista de favoritos
+      operationId: ObtenerFavoritos
+      responses:
+        200:
+          description: succes request
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      example: 10
+                    plato:
+                      type: string
+                      example: Bagel de salmón
+                    restaurante:
+                      type: string
+                      example: El rincón del pacifico
+                    precio:
+                      type: integer
+                      example: 15000
+        404:
+          description: no favorites
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {'message': no favorites}
+    post:
+      tags:
+        - usuarios
+      summary: Agregar favoritos
+      description: Agregar a la lista de favoritos
+      operationId: AgregarFavoritos
+      responses:
+        201:
+          description: succes request
           content:
             'application/json':
               schema:
@@ -294,6 +337,9 @@ paths:
                 example: {'mesagge': platos ya recibidos del usuario}
         201:
           description:  se ha recibido por primera vez un pedido de este usuario
+                example: {'mesagge': succes request}
+        400:
+          description: invalid syntax
           content:
             'application/json':
               schema:
@@ -301,6 +347,9 @@ paths:
                 example: {'mesagge': felicitaciones por haber hecho tu primer pedido!}
         400:
           description: hubo un error de parte del usuario
+                example: {'message': invalid syntax}
+        404:
+          description: non-existent plate
           content:
             'application/json':
               schema:
@@ -380,6 +429,23 @@ paths:
 
 
 
-
-
-
+                example: {'message': non-existent plate}
+      requestBody:
+        content:
+          'application/json':
+             schema:
+              type: array
+              items:
+                properties:
+                  id:
+                    type: integer
+                    example: 10
+                  plato:
+                    type: string
+                    example: Bagel de salmón
+                  restaurante:
+                    type: string
+                    example: El rincón del pacifico
+                  precio:
+                    type: integer
+                    example: 15000     
