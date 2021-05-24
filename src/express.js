@@ -1,17 +1,16 @@
 const express = require('express');
-const helmet = require('helmet')
+
 const jsonWebToken = require('./token')
 
 const app = express();
 const port = 3006;
-app.use(helmet())
 
 
-import.
+
+// import.
 
 app.get('/', function(req,res){
     res.send('hello ')
-    
 
 });
 

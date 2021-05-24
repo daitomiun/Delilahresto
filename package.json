@@ -1,10 +1,11 @@
 {
-  "name": "Delilahresto",
+  "name": "delilahresto",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "express.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/express.js"
   },
   "repository": {
     "type": "git",

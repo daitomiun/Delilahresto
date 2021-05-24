@@ -30,33 +30,33 @@ tags:
 paths:
   
   /usuarios:
-    get:
-      tags:
-        - usuarios
-      summary: muestra datos de usuario o que el admin muestra lista de usuarios
-      operationId: tomarInfo
-      responses:
-        200:
-          description: exito en la toma de datos!
-          content:
-            'application/json':
-              schema:
-                type: object
-                example: {'mesagge': Exito en la toma de datos} 
-        401:
-          description: no autorizado
-          content:
-            'application/json':
-              schema:
-                type: object
-                example: {'mesagge': No autorizado}
-        404:
-          description: no encontrado
-          content:
-            'application/json':
-              schema:
-                type: object
-                example: {'mesagge': No encontrado}
+    # get:
+    #   tags:
+    #     - usuarios
+    #   summary: obtiene lista de usuarios
+    #   operationId: tomarInfo
+    #   responses:
+    #     200:
+    #       description: exito en la toma de datos!
+    #       content:
+    #         'application/json':
+    #           schema:
+    #             type: object
+    #             example: {'mesagge': Exito en la toma de datos} 
+    #     401:
+    #       description: no autorizado
+    #       content:
+    #         'application/json':
+    #           schema:
+    #             type: object
+    #             example: {'mesagge': No autorizado}
+    #     404:
+    #       description: no encontrado
+    #       content:
+    #         'application/json':
+    #           schema:
+    #             type: object
+    #             example: {'mesagge': No encontrado}
     put:
       tags:
         - usuarios
@@ -197,11 +197,11 @@ paths:
                   contraseña: 
                     type: string
                     example: freddymercurie123
-  /usuarios/:nombreDeUsuario:
+  /perfil:
     get:
       tags:
         - usuarios
-      summary: tomar nombres de usuarios (admin)
+      summary: tomar los datos del usuarios
       operationId: tomarNombres
       parameters:
       - name: username
