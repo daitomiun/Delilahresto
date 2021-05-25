@@ -1,12 +1,12 @@
 CREATE TABLE `users` (
   `id` INT AUTO_INCREMENT,
   `user_name` VARCHAR(30) NOT NULL,
-  `pasword` VARCHAR(30) NOT NULL,
+  `password` VARCHAR(30) NOT NULL,
   `if_admin` TINYINT(0) NULL DEFAULT 0,
   `full_name` VARCHAR(30) NOT NULL,
-  `phone` INT(20) NOT NULL,
+  `phone` BIGINT(20) NOT NULL,
   `mail` VARCHAR(30) NOT NULL,
-  `adress` VARCHAR(30) NOT NULL,
+  `address` VARCHAR(30) NOT NULL,
   PRIMARY KEY (`id`)
 );
 
