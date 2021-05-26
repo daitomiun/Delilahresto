@@ -17,7 +17,7 @@ router.post('/login', validarDatosLogin, async (req,res)=>{
     if (!usuarios){
         res.status(404).json( {status: "Usuario no encontrado"} );
     }else{
-        if (usuarios.pasword != password){
+        if (usuarios.password != password){
             return res.status(400).json( {msg: "Password incorrect"} );
         }else{
             let usuario = {
