@@ -20,16 +20,8 @@ router.post('/login', validarDatosLogin, async (req,res)=>{
         if (usuarios.password != password){
             return res.status(400).json( {msg: "Password incorrect"} );
         }else{
-            let usuario = {
-                id: usuarios.id,
-                user_name: usuarios.user_name,
-                if_admin: usuarios.if_admin,
-                full_name: usuarios.full_name,
-                phone: usuarios.phone,
-                mail: usuarios.mail,
-                address: usuarios.address
-            }
-            let token = jwt.sign({data: usuario}, sign);
+            let id = usuarios.id
+            let token = jwt.sign({id: id}, sign);
             return res.json( {token: token, status: "login"} );
         }
     };
