@@ -8,6 +8,14 @@ exports.buscarUser = async (user_name) => {
     }
 }
 
+exports.buscarInfo = async (id) => {
+    try{
+        return await sequelize.query('SELECT * FROM users WHERE id = ?', {replacements: [id], type: sequelize.QueryTypes.SELECT});
+    }catch (error){
+        console.log(error);
+    }
+}
+
 exports.verificarEmail = async (mail) => {
     try{
         return await sequelize.query('SELECT * FROM users WHERE mail = ?', {replacements: [mail], type: sequelize.QueryTypes.SELECT});
