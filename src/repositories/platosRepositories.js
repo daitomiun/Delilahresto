@@ -5,9 +5,9 @@ exports.insertPlate = async (name, price, img_url, id, description) => {
     {replacements: [name, price, img_url, id, description], type: sequelize.QueryTypes.INSERT})
     return
 }
-exports.buscarPlato= async (name) => {
+exports.buscarPlato= async (param, valor) => {
     try{
-        const platos =  await sequelize.query(`SELECT * FROM products WHERE name LIKE :search_name`, { replacements: {search_name: `${name}%`}, type: sequelize.QueryTypes.SELECT});
+        const platos =  await sequelize.query(`SELECT * FROM products WHERE ${param.replace(/[' "]+/g, '')} LIKE :search_name`, { replacements: { search_name: `${valor}%`}, type: sequelize.QueryTypes.SELECT});
         return platos
         
         

@@ -6,11 +6,9 @@ require('dotenv').config();
 
 router.get('/', async (req, res)=>
 {
-
-    const name = req.query.name
-    const platos = await buscarPlato(name);
-    console.log(req.query)
-    console.log(platos)
+    const param = req.query.param
+    const valor = req.query.valor
+    const platos = await buscarPlato(param, valor);
     if (platos == ''){
         res.status(404).json( {status: "no hay platos"} );
     }
