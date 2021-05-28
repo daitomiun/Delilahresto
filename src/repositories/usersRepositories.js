@@ -1,13 +1,5 @@
 const sequelize = require('../database/conexion');
 
-exports.buscarUser = async (user_name) => {
-    try{
-        return await sequelize.query('SELECT * FROM users WHERE user_name = ?', {replacements: [user_name], type: sequelize.QueryTypes.SELECT});
-    }catch (error){
-        console.log(error);
-    }
-}
-
 exports.buscarInfo = async (id) => {
     try{
         return await sequelize.query('SELECT * FROM users WHERE id = ?', {replacements: [id], type: sequelize.QueryTypes.SELECT});

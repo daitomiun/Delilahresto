@@ -4,15 +4,15 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const sign = process.env.SIGN || 'ESLAKPEPDDR2021';
-const {buscarUser, insertUsers, verificarEmail} = require("../repositories/usersRepositories");
+const {insertUsers, verificarEmail} = require("../repositories/usersRepositories");
 const validarDatosLogin = validarDatos.validarDatosLogin;
 const validarDatosRegister = validarDatos.validarDatosRegister;
 const validarEmail = validarDatos.validarEmail;
 const validarClave = validarDatos.validarClave;
 
 router.post('/login', validarDatosLogin, async (req,res)=>{
-    const {username, password} = req.body;
-    const [usuarios] = await buscarUser(username);
+    const {mail, password} = req.body;
+    const [usuarios] = await verificarEmail(mail);
 
     if (!usuarios){
         res.status(404).json( {status: "Usuario no encontrado"} );

@@ -14,17 +14,18 @@ CREATE TABLE `orders` (
   `id` INT AUTO_INCREMENT,
   `id_client` INT NOT NULL,
   `id_status` INT NOT NULL,
+  `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `status` (
-  `id` INT,
+  `id` INT AUTO_INCREMENT,
   `status` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `orders-products` (
-  `id` INT,
+  `id` INT AUTO_INCREMENT,
   `id_products` INT  NOT NULL,
   `id_orders` INT NOT NULL,
   `amount` INT NULL DEFAULT 1,
@@ -32,7 +33,7 @@ CREATE TABLE `orders-products` (
 );
 
 CREATE TABLE `Products` (
-  `id` INT,
+  `id` INT AUTO_INCREMENT,
   `name` VARCHAR(30) NOT NULL,
   `price` FLOAT NOT NULL,
   `img_url` VARCHAR (255) NOT NULL,
