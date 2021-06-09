@@ -1,7 +1,6 @@
 const express = require('express');
-const validarDatos = require('./../middlewares/validarDatos');
+const validarDatos = require('./../middlewares/validarPlatos');
 const {buscarPlato,  insertPlate, deletePlates} = require("../repositories/platosRepositories");
-const { json } = require('express');
 const router = express.Router();
 require('dotenv').config();
 
@@ -17,7 +16,7 @@ router.get('/', async (req, res)=>
     return res.status(200).json( {data: platos , status: "platos encontrados"} );
   
 })
-router.post('/nuevoPlato', async (req, res)=>
+router.post('/nuevoPlato', validarDatos.validarDatosplatos,  async (req, res)=>
 {
 
     // const name = req.params.name
@@ -34,7 +33,8 @@ router.post('/nuevoPlato', async (req, res)=>
         // console.log('success', user.toJSON());
       } catch (err) {
         // print the error details
-        console.log(err, "algo paso  mal");
+        return res.status(400).json({ data: err , status: "platos no puestos"})
+        // console.log(err, "algo paso  mal");
       }
 
     // console.log(name)

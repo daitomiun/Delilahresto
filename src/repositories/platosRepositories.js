@@ -30,39 +30,39 @@ exports.deletePlates = async (id) => {
 }
 
 
-exports.buscarNombrePlato= async (name) => {
-    try{
-        return await sequelize.query('SELECT * FROM products WHERE name = ?', {replacements: [name], type: sequelize.QueryTypes.SELECT});
-    }catch (error){
-        console.log(error);
-    }
-}
-exports.buscarPrecioPlato= async (price) => {
-    try{
-        return await sequelize.query('SELECT * FROM products WHERE price = ?', {replacements: [price], type: sequelize.QueryTypes.SELECT});
-    }catch (error){
-        console.log(error);
-    }
-}
-exports.buscarimagenPlato= async (img_url) => {
-    try{
-        return await sequelize.query('SELECT * FROM products WHERE img_url = ?', {replacements: [img_url], type: sequelize.QueryTypes.SELECT});
-    }catch (error){
-        console.log(error);
-    }
-}
-exports.buscarIdPlato= async (id) => {
-    try{
-        return await sequelize.query('SELECT * FROM products WHERE id = ?', {replacements: [id], type: sequelize.QueryTypes.SELECT});
-    }catch (error){
-        console.log(error);
-    }
-}
-exports.buscarDescripcionPlato= async (description) => {
-    try{
-        return await sequelize.query('SELECT * FROM products WHERE description = ?', {replacements: [description], type: sequelize.QueryTypes.SELECT});
-    }catch (error){
-        console.log(error);
-    }
-}
+// exports.buscarNombrePlato= async (name) => {
+//     try{
+//         return await sequelize.query('SELECT * FROM products WHERE name = ?', {replacements: [name], type: sequelize.QueryTypes.SELECT});
+//     }catch (error){
+//         console.log(error);
+//     }
+// }
+// exports.buscarPrecioPlato= async (price) => {
+//     try{
+//         return await sequelize.query('SELECT * FROM products WHERE price = ?', {replacements: [price], type: sequelize.QueryTypes.SELECT});
+//     }catch (error){
+//         console.log(error);
+//     }
+// }
+// exports.buscarimagenPlato= async (img_url) => {
+//     try{
+//         return await sequelize.query('SELECT * FROM products WHERE img_url = ?', {replacements: [img_url], type: sequelize.QueryTypes.SELECT});
+//     }catch (error){
+//         console.log(error);
+//     }
+// }
+// exports.buscarIdPlato= async (id) => {
+//     try{
+//         return await sequelize.query('SELECT * FROM products WHERE id = ?', {replacements: [id], type: sequelize.QueryTypes.SELECT});
+//     }catch (error){
+//         console.log(error);
+//     }
+// }
+// exports.buscarDescripcionPlato= async (description) => {
+//     try{
+//         return await sequelize.query('SELECT * FROM products WHERE description = ?', {replacements: [description], type: sequelize.QueryTypes.SELECT});
+//     }catch (error){
+//         console.log(error);
+//     }
+// }
  
