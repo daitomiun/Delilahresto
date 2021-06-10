@@ -10,11 +10,11 @@ info:
     
 
 servers:
-  - url: http://localhost:3300
+  - url: http://localhost
     description: ServidorLocal
     variables:
       port:
-        default: '3306'
+        default: '3006'
   - url: https://delilahresto.com
     description: produccion
   - url: https://dev.delilahResto.com
@@ -24,119 +24,16 @@ tags:
     description: pedidos de los usuarios y admin
   - name: productos
     description: productos de la base de datos
-  - name: usuarios
-    description: admin y usuario
+  - name: Usuarios
+    description: Endpoints para el manejo de información de clientes y administradores.
 
 paths:
-  
-  /usuarios:
-    # get:
-    #   tags:
-    #     - usuarios
-    #   summary: obtiene lista de usuarios
-    #   operationId: tomarInfo
-    #   responses:
-    #     200:
-    #       description: exito en la toma de datos!
-    #       content:
-    #         'application/json':
-    #           schema:
-    #             type: object
-    #             example: {'mesagge': Exito en la toma de datos} 
-    #     401:
-    #       description: no autorizado
-    #       content:
-    #         'application/json':
-    #           schema:
-    #             type: object
-    #             example: {'mesagge': No autorizado}
-    #     404:
-    #       description: no encontrado
-    #       content:
-    #         'application/json':
-    #           schema:
-    #             type: object
-    #             example: {'mesagge': No encontrado}
-    put:
-      tags:
-        - usuarios
-      summary: edita datos activos del usuario
-      responses:
-        200:
-          description: operacion exitosa
-          content:
-            'application/json':
-              schema:
-                type: object
-                example: {'mesagge': Operacion exitosa} 
-        400:
-          description: contraseña/usuario invalidos
-          content:
-            'application/json':
-              schema:
-                type: object
-                example: {'mesagge': Contraseña/usuario invalidos}
-        404:
-          description: no encontrado
-          content:
-            'application/json':
-              schema:
-                type: object
-                example: {'mesagge': No encontrado}
-    delete:
-      tags:
-        - usuarios
-      summary: quita usuarios activos o no activos
-      responses:
-        200:
-          description: operacion exitosa
-          content:
-            'application/json':
-              schema:
-                type: object
-                example: {'mesagge': Operacion exitosa} 
-        404:
-          description: no encontrado
-          content:
-            'application/json':
-              schema:
-                type: object
-                example: {'mesagge': No encontrado}
-        400:
-          description: usuario no pudo quitar su cuenta
-          content:
-            'application/json':
-              schema:
-                type: object
-                example: {'mesagge': Usuario no pudo quitar su cuenta}
-  /usuarios/login:
+  /auth/login:
     post:
       tags:
-        - usuarios
-      summary: Dejará entrar al usuario
-      operationId: inicioId
-      responses:
-        200:
-          description: correct login
-          content:
-            'application/json':
-              schema:
-                type: object
-                example: {'mesagge': login successfully}
-        400:
-          description: invalid syntax
-          content:
-            'application/json':
-              schema:
-                type: object
-                example: {'message': invalid syntax}
-        404:
-          description: non-existent user
-          content:
-            'application/json':
-              schema:
-                type: object
-                example: {'message': non-existent user}
+        - Usuarios
+      summary: Login de usuarios.
+      description: Permite el inicio de sesión de los usuarios.
       requestBody:
         content:
           'application/json':
@@ -144,34 +41,44 @@ paths:
               type: array
               items:
                 properties:
-                  usuario:
+                  username:
                     type: string
                     example: freddiemercury@email.com
-                  contraseña:
+                  password:
                     type: string
                     example: freddymercurie123
-  /usuarios/register:
+      responses:
+        200:
+          description: Login correcto.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {
+                          "token": "7WK5T79u5mIzjIXXi2oI9Fglmgivv7RAJ7izyj9tUyQ",
+                          "status": "login"
+                        }
+        400:
+          description: Contraseña invalida.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"msg": "Password incorrect"}
+        404:
+          description: Usuario inexistente.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"status": "Usuario no encontrado"}
+      
+  /auth/register:
     post:
       tags:
-        - usuarios
-      summary: Crear usuario
-      description: crearlos enla BD cuando se registren
-      operationId: CrearUsuario
-      responses:
-        201:
-          description: succes post
-          content:
-            'application/json':
-              schema:
-                type: object
-                example: {'mesagge': user created successfully}
-        400:
-          description: invalid syntax
-          content:
-            'application/json':
-              schema:
-                type: object
-                example: {'message': invalid syntax}
+        - Usuarios
+      summary: Crear usuario.
+      description: Permite la creación de nuevos usuarios.
       requestBody:
         content:
           'application/json':
@@ -179,42 +86,180 @@ paths:
               type: array
               items:
                 properties:
-                  usuario:
+                  user_name:
                     type: string
-                    example: queen_freddie
-                  nombre y apellido:
+                    example: Freddie
+                  password:
+                    type: string
+                    example: Freddie123.
+                  if_admin:
+                    type: string
+                    example: si
+                  full_name:
                     type: string
                     example: Freddie Mercury
-                  email:
+                  phone:
+                    type: number
+                    example: 3135324587
+                  mail: 
                     type: string
-                    example: freddiemercury@email.com
-                  telefono:
-                    type: integer
-                    example: +44 7712345678
-                  direccion:
+                    example: freddy123@gmail.com
+                  address:
                     type: string
-                    example: 1 Logan PIKensington, London W8 6DE
-                  contraseña: 
-                    type: string
-                    example: freddymercurie123
+                    example: 'diagonal 20c # 10a - 98'
+      responses:
+        201:
+          description: Registro exitoso.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"msg": "register"}
+        400:
+          description: Mail en uso.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"msg": "usuario existente"}
+        406:
+          description: Contraseña o mail invalido.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"msg": "contraseña invalida"}
+        422:
+          description: Falta de alguna propiedad.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"msg": "Error, no se envio el atributo user_name"}
+      
   /perfil:
     get:
       tags:
-        - usuarios
-      summary: tomar los datos del usuarios
-      operationId: tomarNombres
+        - Usuarios
+      summary: Datos de usuario.
+      description: Trae todos los datos del usuario activo.
       parameters:
-      - name: username
-        in: path
-        description: se obtendra los nombre en la bd
+      - name: Authorization
+        in: header
+        description: Token recibido en el Login.
         required: true
         schema:  
           type: string
       responses:
           200:
-            description: operacion exitosa
+            description: Operacion exitosa.
+            content:
+              'application/json':
+                schema:
+                  type: object
+                  example: {'data':{
+                                  "id": 1,
+                                  "user_name": "andrea",
+                                  "password": "Andrea123.",
+                                  "if_admin": 1,
+                                  "full_name": "andrea perez",
+                                  "phone": 3135324587,
+                                  "mail": "andrea@gmail.com",
+                                  "address": "diagonal 20c # 10a - 98"
+                              }}
           404:
-            description: no permitido
+            description: Operación no permitida.
+            content:
+              'application/json':
+                schema:
+                  type: object
+                  example: {"msg": "error"}
+    put:
+      tags:
+        - Usuarios
+      summary: Edita datos de usuario.
+      description: Permite la edición de los datos del usuario activo.
+      parameters:
+      - name: Authorization
+        in: header
+        description: Token recibido en el Login.
+        required: true
+        schema:  
+          type: string
+      requestBody:
+        content:
+          'application/json':
+             schema:
+              type: array
+              items:
+                properties:
+                  user_name:
+                    type: string
+                    example: Freddie
+                  password:
+                    type: string
+                    example: Freddie123.
+                  full_name:
+                    type: string
+                    example: Freddie Mercury
+                  phone:
+                    type: number
+                    example: 3135324587
+                  mail: 
+                    type: string
+                    example: freddy123@gmail.com
+                  address:
+                    type: string
+                    example: 'diagonal 20c # 10a - 98'
+      responses:
+        201:
+          description: Actualización exitosa.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"data": "sucessfull"}
+        400:
+          description: Mail en uso.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"msg": "mail en uso"}
+        406:
+          description: Contraseña o mail invalido.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"msg": "contraseña invalida"}
+        422:
+          description: Falta de alguna propiedad.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"msg": "Error, no se envio el atributo user_name"}
+    delete:
+      tags:
+        - Usuarios
+      summary: Eliminar usuarios.
+      description: Permite eliminar el usuario activo.
+      parameters:
+      - name: Authorization
+        in: header
+        description: Token recibido en el Login.
+        required: true
+        schema:  
+          type: string
+      responses:
+        200:
+          description: operacion exitosa
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"status": "delete sucessfull"}
   /pedidos:
     get:
       tags:

@@ -14,6 +14,7 @@ CREATE TABLE `orders` (
   `id` INT AUTO_INCREMENT,
   `id_client` INT NOT NULL,
   `id_status` INT NOT NULL,
+  `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 );
 
