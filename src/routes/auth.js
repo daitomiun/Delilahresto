@@ -21,7 +21,8 @@ router.post('/login', validarDatosLogin, async (req,res)=>{
             return res.status(400).json( {msg: "Password incorrect"} );
         }else{
             let id = usuarios.id
-            let token = jwt.sign({id: id}, sign);
+            let if_admin = usuarios.if_admin
+            let token = jwt.sign({id: id, if_admin: if_admin}, sign);
             return res.json( {token: token, status: "login"} );
         }
     };
