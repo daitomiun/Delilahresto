@@ -5,11 +5,14 @@
 por Mateo Rodriguez y Brigite Romero
 
 #### Proyecto de backend para un restaurante 
+Descargue el la extension de visual studio code **OpenAPI (Swagger) Editor** para poder ver la documentacion el icono es https://www.dropbox.com/s/pngj3u7yt73pw5z/InkedCaptura%20de%20pantalla%202021-06-17%2016.34.39_LI.jpg?dl=0
+asi podran ver sin ningun problema swagger y su api, el archivo en documentacion.
+
 
 (1.)Para empezar la aplicacion se de debe instalar los modulos correspondientes atraves de este comando dentro de la consola de vs code **npm i** y despues de que se descarguen las dependencias ejecute el comando **npm run dev** para empezar la aplicación.
 las dependencias deben ser dotenv, express, jsonwebtoken maria db y sequelize, esto lo podra ver en el archivo package.json
 
-(2.) ahora se ejecutara el comando **npm run dev** que va a iniciar el servidor de tu computadora y se podra conectar a postman y a el servidor
+(2.) ahora se ejecutara el comando **npm run dev** que va a iniciar el servidor de tu computadora y se podra conectar a postman.
 
 Ya con esto realizado se debe usar xamp y postman para probarlo
 
@@ -21,7 +24,7 @@ Ya con esto realizado se debe usar xamp y postman para probarlo
 
 (6.) con el link proporcionado podra entrar a nuestro workspace que tendra todas las conexiones y rutas al servidor para probarlas.
 
-nota: cada insercion de datos en postam se vera reflejado en phpMyAdmin.
+nota: cada insercion de datos en postman se vera reflejado en phpMyAdmin.
 
 
 se dejara el link al workspace que usamos para probarlo:
