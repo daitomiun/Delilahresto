@@ -481,6 +481,13 @@ paths:
         - Pedidos
       summary: Eliminar pedido.
       description: Permite eliminar un pedido.
+      parameters:
+      - name: Authorization
+        in: header
+        description: Token recibido en el Login.
+        required: true
+        schema:  
+          type: string
       responses:
         200:
           description: Se elimino correctamente.
@@ -496,6 +503,13 @@ paths:
               schema:
                 type: object
                 example: {"msg": "error"}
+        403:
+          description: Usuario no autorizado.
+          content:
+            'application/json':
+                schema:
+                  type: object
+                  example: {"msg": "Unauthorized"}
   /platos:
     get:
       tags:

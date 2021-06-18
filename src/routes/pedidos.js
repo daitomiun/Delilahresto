@@ -97,9 +97,19 @@ router.put('/editarEstado', async (req,res)=>
 
 router.delete('/:id',async (req, res) => {
     let id = req.params.id
-    const deleteProduct = await deleteOrdersproducts(id);
-    const deleteOrder = await deleteOrders(deleteProduct[0].id_orders)
-    return res.status(200).json({status: "delete sucessfull"});
+    let token = req.headers['authorization']
+    let decoded = jwt.verify(token, sign);
+    if (decoded.if_admin === 1){
+      const deleteProduct = await deleteOrdersproducts(id);
+      const deleteOrder = await deleteOrders(deleteProduct[0].id_orders)
+      return res.status(200).json({status: "delete sucessfull"});
+    }else{
+      if(decoded.if_admin === 0){
+        res.status(403).json({msg: "Unauthorized"});
+      }else{
+        res.status(400).json({msg: "error"});
+      }
+    }
   });
 
 module.exports = router;
