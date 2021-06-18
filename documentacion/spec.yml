@@ -10,133 +10,30 @@ info:
     
 
 servers:
-  - url: http://localhost:3300
+  - url: http://localhost
     description: ServidorLocal
     variables:
       port:
-        default: '3306'
+        default: '3006'
   - url: https://delilahresto.com
     description: produccion
   - url: https://dev.delilahResto.com
     description: staging
 tags:
-  - name: pedidos
-    description: pedidos de los usuarios y admin
-  - name: productos
-    description: productos de la base de datos
-  - name: usuarios
-    description: admin y usuario
+  - name: Pedidos
+    description: Endpoints para el manejo de los pedidos.
+  - name: Platos
+    description: Endpoints para el manejo de los platos.
+  - name: Usuarios
+    description: Endpoints para el manejo de información de clientes y administradores.
 
 paths:
-  
-  /usuarios:
-    # get:
-    #   tags:
-    #     - usuarios
-    #   summary: obtiene lista de usuarios
-    #   operationId: tomarInfo
-    #   responses:
-    #     200:
-    #       description: exito en la toma de datos!
-    #       content:
-    #         'application/json':
-    #           schema:
-    #             type: object
-    #             example: {'mesagge': Exito en la toma de datos} 
-    #     401:
-    #       description: no autorizado
-    #       content:
-    #         'application/json':
-    #           schema:
-    #             type: object
-    #             example: {'mesagge': No autorizado}
-    #     404:
-    #       description: no encontrado
-    #       content:
-    #         'application/json':
-    #           schema:
-    #             type: object
-    #             example: {'mesagge': No encontrado}
-    put:
-      tags:
-        - usuarios
-      summary: edita datos activos del usuario
-      responses:
-        200:
-          description: operacion exitosa
-          content:
-            'application/json':
-              schema:
-                type: object
-                example: {'mesagge': Operacion exitosa} 
-        400:
-          description: contraseña/usuario invalidos
-          content:
-            'application/json':
-              schema:
-                type: object
-                example: {'mesagge': Contraseña/usuario invalidos}
-        404:
-          description: no encontrado
-          content:
-            'application/json':
-              schema:
-                type: object
-                example: {'mesagge': No encontrado}
-    delete:
-      tags:
-        - usuarios
-      summary: quita usuarios activos o no activos
-      responses:
-        200:
-          description: operacion exitosa
-          content:
-            'application/json':
-              schema:
-                type: object
-                example: {'mesagge': Operacion exitosa} 
-        404:
-          description: no encontrado
-          content:
-            'application/json':
-              schema:
-                type: object
-                example: {'mesagge': No encontrado}
-        400:
-          description: usuario no pudo quitar su cuenta
-          content:
-            'application/json':
-              schema:
-                type: object
-                example: {'mesagge': Usuario no pudo quitar su cuenta}
-  /usuarios/login:
+  /auth/login:
     post:
       tags:
-        - usuarios
-      summary: Dejará entrar al usuario
-      operationId: inicioId
-      responses:
-        200:
-          description: correct login
-          content:
-            'application/json':
-              schema:
-                type: object
-                example: {'mesagge': login successfully}
-        400:
-          description: invalid syntax
-          content:
-            'application/json':
-              schema:
-                type: object
-                example: {'message': invalid syntax}
-        404:
-          description: non-existent user
-          content:
-            'application/json':
-              schema:
-                type: object
-                example: {'message': non-existent user}
+        - Usuarios
+      summary: Login de usuarios.
+      description: Permite el inicio de sesión de los usuarios.
       requestBody:
         content:
           'application/json':
@@ -144,34 +41,43 @@ paths:
               type: array
               items:
                 properties:
-                  usuario:
+                  mail:
                     type: string
                     example: freddiemercury@email.com
-                  contraseña:
+                  password:
                     type: string
                     example: freddymercurie123
-  /usuarios/register:
+      responses:
+        200:
+          description: Login correcto.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {
+                          "token": "7WK5T79u5mIzjIXXi2oI9Fglmgivv7RAJ7izyj9tUyQ",
+                          "status": "login"
+                        }
+        400:
+          description: Contraseña invalida.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"msg": "Password incorrect"}
+        404:
+          description: Usuario inexistente.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"status": "Usuario no encontrado"}
+  /auth/register:
     post:
       tags:
-        - usuarios
-      summary: Crear usuario
-      description: crearlos enla BD cuando se registren
-      operationId: CrearUsuario
-      responses:
-        201:
-          description: succes post
-          content:
-            'application/json':
-              schema:
-                type: object
-                example: {'mesagge': user created successfully}
-        400:
-          description: invalid syntax
-          content:
-            'application/json':
-              schema:
-                type: object
-                example: {'message': invalid syntax}
+        - Usuarios
+      summary: Crear usuario.
+      description: Permite la creación de nuevos usuarios.
       requestBody:
         content:
           'application/json':
@@ -179,258 +85,652 @@ paths:
               type: array
               items:
                 properties:
-                  usuario:
+                  user_name:
                     type: string
-                    example: queen_freddie
-                  nombre y apellido:
+                    example: Freddie
+                  password:
+                    type: string
+                    example: Freddie123.
+                  if_admin:
+                    type: string
+                    example: si
+                  full_name:
                     type: string
                     example: Freddie Mercury
-                  email:
+                  phone:
+                    type: number
+                    example: 3135324587
+                  mail: 
                     type: string
-                    example: freddiemercury@email.com
-                  telefono:
-                    type: integer
-                    example: +44 7712345678
-                  direccion:
+                    example: freddy123@gmail.com
+                  address:
                     type: string
-                    example: 1 Logan PIKensington, London W8 6DE
-                  contraseña: 
-                    type: string
-                    example: freddymercurie123
+                    example: 'diagonal 20c # 10a - 98'
+      responses:
+        201:
+          description: Registro exitoso.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"msg": "register"}
+        400:
+          description: Mail en uso.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"msg": "usuario existente"}
+        406:
+          description: Contraseña o mail invalido.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"msg": "contraseña invalida"}
+        422:
+          description: Falta de alguna propiedad.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"msg": "Error, no se envio el atributo user_name"}
   /perfil:
     get:
       tags:
-        - usuarios
-      summary: tomar los datos del usuarios
-      operationId: tomarNombres
+        - Usuarios
+      summary: Datos de usuario.
+      description: Trae todos los datos del usuario activo.
       parameters:
-      - name: username
-        in: path
-        description: se obtendra los nombre en la bd
+      - name: Authorization
+        in: header
+        description: Token recibido en el Login.
         required: true
         schema:  
           type: string
       responses:
           200:
-            description: operacion exitosa
+            description: Operacion exitosa.
+            content:
+              'application/json':
+                schema:
+                  type: object
+                  example: {'data':{
+                                  "id": 1,
+                                  "user_name": "andrea",
+                                  "password": "Andrea123.",
+                                  "if_admin": 1,
+                                  "full_name": "andrea perez",
+                                  "phone": 3135324587,
+                                  "mail": "andrea@gmail.com",
+                                  "address": "diagonal 20c # 10a - 98"
+                              }}
           404:
-            description: no permitido
+            description: Operación no permitida.
+            content:
+              'application/json':
+                schema:
+                  type: object
+                  example: {"msg": "error"}
+    put:
+      tags:
+        - Usuarios
+      summary: Edita datos de usuario.
+      description: Permite la edición de los datos del usuario activo.
+      parameters:
+      - name: Authorization
+        in: header
+        description: Token recibido en el Login.
+        required: true
+        schema:  
+          type: string
+      requestBody:
+        content:
+          'application/json':
+             schema:
+              type: array
+              items:
+                properties:
+                  user_name:
+                    type: string
+                    example: Freddie
+                  password:
+                    type: string
+                    example: Freddie123.
+                  full_name:
+                    type: string
+                    example: Freddie Mercury
+                  phone:
+                    type: number
+                    example: 3135324587
+                  mail: 
+                    type: string
+                    example: freddy123@gmail.com
+                  address:
+                    type: string
+                    example: 'diagonal 20c # 10a - 98'
+      responses:
+        201:
+          description: Actualización exitosa.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"data": "sucessfull"}
+        400:
+          description: Mail en uso.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"msg": "mail en uso"}
+        406:
+          description: Contraseña o mail invalido.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"msg": "contraseña invalida"}
+        422:
+          description: Falta de alguna propiedad.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"msg": "Error, no se envio el atributo user_name"}
+    delete:
+      tags:
+        - Usuarios
+      summary: Eliminar usuarios.
+      description: Permite eliminar el usuario activo.
+      parameters:
+      - name: Authorization
+        in: header
+        description: Token recibido en el Login.
+        required: true
+        schema:  
+          type: string
+      responses:
+        200:
+          description: operacion exitosa
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"status": "delete sucessfull"}
   /pedidos:
     get:
       tags:
-        - pedidos
-      description: obtiene lista de productos
+        - Pedidos
+      summary: Todos los pedidos.
+      description: Obtiene lista de todos los pedidos, el usuario vera los pedidos realizados y el administrador podra ver todos los pedidos de todos los usuarios.
+      parameters:
+      - name: Authorization
+        in: header
+        description: Token recibido en el Login.
+        required: true
+        schema:  
+          type: string
       responses:
-        201:
-          description: succes post
+        200:
+          description: Operación exitosa
           content:
             'aplication/json':
               schema:
                 type: array
-                items:
-                  $ref: '#'
-        400:
-          description: no permitido/ encontrado
+                example: {"data": [{
+                                "id": 1,
+                                "user": "andrea lopez",
+                                "products": "Pescado",
+                                "amount": 1,
+                                "phone": 3135324587,
+                                "mail": "andrea@gmail.com",
+                                "address": "diagonal 20c # 10a - 98",
+                                "status": "NUEVO"
+                            }],
+                          "status": "pedidos encontrados"}
+                
+        404:
+          description: No hay pedidos registrados
           content:
             'aplication/json':
               schema:
                 type: array
-                items:
-                  $ref: '#'
-    put:
-      tags:
-        - pedidos
-      description: añade productos al usuario
-      responses:
-        200:
-          description: succes request
-          content:
-             'aplication/json':
-              schema:
-                type: array
-                items:
-                  $ref: '#'
-        400:
-            description: no permitido/ encontrado
-            content:
-              'aplication/json':
-                schema:
-                  type: array
-                  items:
-                    $ref: '#'
-    delete:
-      tags:
-        - pedidos
-      description: quita productos añadidos del usuarios
-      responses:
-        200:
-          description: deleted succuesfully
-          content:
-            'aplication/json':
-                schema:
-                  type: array
-                  items:
-                    $ref: '#'
-        400:
-          description: no quito productos/error
-          content:
-              'aplication/json':
-                  schema:
-                    type: array
-                    items:
-                      $ref: '#'   
-  /pedidos/:transaccion-hecha:
-    post:
-      tags:
-        - pedidos
-      description: se tomara todo lo que el usuario pidio, y se guardara en la bd
-      responses:
-        200:
-          description:  se ha recibido tu pedido
-  /usuarios/favoritos:
+                example: {"status": "no hay pedidos"}
+  /pedidos/buscar/:id:
     get:
       tags:
-        - usuarios
-      summary: Obtener favoritos
-      description: obtiene la lista de favoritos
-      operationId: ObtenerFavoritos
+        - Pedidos
+      summary: Buscar un pedido.
+      description: Permite buscar una orden por su id.
+      parameters:
+      - name: Authorization
+        in: header
+        description: Token recibido en el Login.
+        required: true
+        schema:  
+          type: string
       responses:
         200:
-          description: succes request
+          description: Operación exitosa
           content:
-            'application/json':
+            'aplication/json':
               schema:
                 type: array
-                items:
-                  properties:
-                    id:
-                      type: integer
-                      example: 10
-                    plato:
-                      type: string
-                      example: Bagel de salmón
-                    restaurante:
-                      type: string
-                      example: El rincón del pacifico
-                    precio:
-                      type: integer
-                      example: 15000
-        404:
-          description: no favorites
+                example: {"data": [{
+                                "id": 1,
+                                "user": "andrea lopez",
+                                "products": "Pescado",
+                                "amount": 1,
+                                "phone": 3135324587,
+                                "mail": "andrea@gmail.com",
+                                "address": "diagonal 20c # 10a - 98",
+                                "status": "NUEVO"
+                            }],
+                          "status": "pedidos encontrados"}
+        400:
+          description: Ocurrio un error en el proceso.
           content:
             'application/json':
               schema:
                 type: object
-                example: {'message': no favorites}
+                example: {"msg": "error"}
+        403:
+          description: Usuario no autorizado.
+          content:
+            'application/json':
+                schema:
+                  type: object
+                  example: {"msg": "Unauthorized"}
+        404:
+          description: No hay pedidos registrados
+          content:
+            'aplication/json':
+              schema:
+                type: array
+                example: {"status": "no hay pedidos"}
+  /pedidos/nuevoPedido:
     post:
       tags:
-        - usuarios
-      summary: Agregar favoritos
-      description: Agregar a la lista de favoritos
-      operationId: AgregarFavoritos
+        - Pedidos
+      summary: Agregar nuevo pedido.
+      description: Permite agregar un nuevo pedido.
+      parameters:
+      - name: Authorization
+        in: header
+        description: Token recibido en el Login.
+        required: true
+        schema:  
+          type: string
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              type: array
+              items:
+                properties:
+                  id_products:
+                    type: number
+                    example: 1
+                  amount:
+                    type: number
+                    example: 1
       responses:
-        201:
-          description: succes request
+        200:
+          description: Se añadio correctamente.
           content:
             'application/json':
               schema:
                 type: object
-                example: {'mesagge': platos ya recibidos del usuario}
+                example: {"status": "pedidos hecho"}
         400:
-          description: invalid syntax
+          description: Ocurrio un error en el proceso.
           content:
             'application/json':
               schema:
                 type: object
-                example: {'mesagge': felicitaciones por haber hecho tu primer pedido!}
-        404:
-          description: non-existent plate
+                example: {"msg": "error"}
+  /pedidos/editarPedido:
+    put:
+      tags:
+        - Pedidos
+      summary: Editar pedido.
+      description: Permite al usuario editar su pedido.
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              type: array
+              items:
+                properties:
+                  id:
+                    type: number
+                    example: 1
+                  id_products:
+                    type: number
+                    example: 1
+                  amount:
+                    type: number
+                    example: 1
+      responses:
+        200:
+          description: Se edito correctamente.
           content:
             'application/json':
               schema:
                 type: object
-                example: {'mesagge': platos no recibidos del usuario por complicaciones}
-  /productos:
-      get:
-        tags:
-          - productos
-        description: toma los datos de los platos en la BD
-        responses:
-            200:
-              description:  se tomaron los datos del plato
-              content:
-                'application/json':
-                  schema:
-                    type: object
-                    example: {'mesagge': platos recibidos}
-            404:
-                description:  hubo complicaciones al tomar los platos
-                content:
-                  'application/json':
-                    schema:
-                      type: object
-                      example: {'mesagge': platos no encontrados}
-      delete:
-              tags:
-                - productos
-              description: borra platos en la base de datos
-              responses:
-                  200:
-                    description:  se borro el plato
-                    content:
-                      'application/json':
-                        schema:
-                          type: object
-                          example: {'mesagge': platos borrados}
-                  400:
-                          description:  no se borraron los datos por complicaciones
-                          content:
-                            'application/json':
-                              schema:
-                                type: object
-                                example: {'mesagge': platos no borrados}
-                  404:
-                      description:  hubo complicaciones al borrar los platos
-                      content:
-                        'application/json':
-                          schema:
-                            type: object
-                            example: {'mesagge': platos no encontrados}
-      post:
-              tags:
-                - productos
-              description: añade platos en la base de datos
-              responses:
-                  200:
-                    description:  se añadio el plato
-                    content:
-                      'application/json':
-                        schema:
-                          type: object
-                          example: {'mesagge': platos borrados}
-                  400:
-                          description:  no se añadieron los datos por complicaciones
-                          content:
-                            'application/json':
-                              schema:
-                                type: object
-                                example: {'mesagge': platos no añadidos}
-              requestBody:
-                content:
-                  'application/json':
-                      schema:
-                        type: array
-                        items:
-                          properties:
-                            id:
-                              type: integer
-                              example: 10
-                            plato:
-                              type: string
-                              example: Bagel de salmón
-                            restaurante:
-                              type: string
-                              example: El rincón del pacifico
-                            precio:
-                              type: integer
-                              example: 15000
+                example: {"data": "sucessfull"}
+        400:
+          description: Ocurrio un error en el proceso.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"msg": "error"}
+  /pedidos/editarEstado:
+    put:
+      tags:
+        - Pedidos
+      summary: Editar estado.
+      description: Permite al administrador editar el estado de un pedido.
+      parameters:
+      - name: Authorization
+        in: header
+        description: Token recibido en el Login.
+        required: true
+        schema:  
+          type: string
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              type: array
+              items:
+                properties:
+                  id:
+                    type: number
+                    example: 1
+                  id_status:
+                    type: number
+                    example: 1
+      responses:
+        200:
+          description: Se edito correctamente.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"status": "status actualizado"}
+        400:
+          description: Ocurrio un error en el proceso.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"msg": "error"}
+        403:
+          description: Usuario no autorizado.
+          content:
+            'application/json':
+                schema:
+                  type: object
+                  example: {"msg": "Unauthorized"}
+  /pedidos/:id:
+    delete:
+      tags:
+        - Pedidos
+      summary: Eliminar pedido.
+      description: Permite eliminar un pedido.
+      responses:
+        200:
+          description: Se elimino correctamente.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"status": "delete sucessfull"}
+        400:
+          description: Ocurrio un error en el proceso.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"msg": "error"}
+  /platos:
+    get:
+      tags:
+        - Platos
+      summary: Platos disponibles.
+      description: Trae todos los platos disponibles en la base de datos.
+      responses:
+          200:
+            description: Operacion exitosa.
+            content:
+              'application/json':
+                schema:
+                  type: object
+                  example: {'data':[
+                                    {
+                                        "id": 1,
+                                        "name": "Pescado",
+                                        "price": 20000,
+                                        "img_url": "https://www.google.com/search?q=pescado&sxsrf=ALeKk003eUrXArNY4CaRBJa36l0NU3z67w:1623858334195&source=lnms&tbm=isch&sa=X&ved=2ahUKEwir6rLZv5zxAhX-RjABHVFpBqkQ_AUoAXoECAIQAw#imgrc=yIVUX2g-MfLEFM",
+                                        "description": "Filete de Robalo a La plancha\r\nAcompa?ado de Arroz blanco, patacones y ensalada."
+                                    },
+                                    {
+                                        "id": 2,
+                                        "name": "Pollo frito",
+                                        "price": 15000,
+                                        "img_url": "https://www.google.com/search?q=pollo+frito&sxsrf=ALeKk00W_ntLJo8ckXtaEQ-a-sUGhy7M9w:1623858462407&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiZmMSWwJzxAhX7SzABHUubBsUQ_AUoAXoECAIQAw&biw=1918&bih=1009#imgrc=TUcr-_J-GeKMIM",
+                                        "description": "Pollo frito"
+                                    }
+                                  ],
+                            "status": "platos encontrados"}
+          404:
+            description: Platos no encontrados.
+            content:
+              'application/json':
+                schema:
+                  type: object
+                  example: {status: "no hay platos"}
+  /platos/buscar:
+    get:
+      tags:
+        - Platos
+      summary: Buscar plato.
+      description: Permite buscar plato por cualquiero propiedad.
+      parameters:
+      - name: param
+        in: query
+        description: Propiedad a filtrar.
+        required: true
+        example: price
+        schema:  
+          type: string
+      - name: valor
+        in: query
+        description: Valor a buscar.
+        required: true
+        example: 20000
+        schema:  
+          type: string
+      responses:
+          200:
+            description: Operacion exitosa.
+            content:
+              'application/json':
+                schema:
+                  type: object
+                  example: {'data':[
+                                    {
+                                        "id": 1,
+                                        "name": "Pescado",
+                                        "price": 20000,
+                                        "img_url": "https://www.google.com/search?q=pescado&sxsrf=ALeKk003eUrXArNY4CaRBJa36l0NU3z67w:1623858334195&source=lnms&tbm=isch&sa=X&ved=2ahUKEwir6rLZv5zxAhX-RjABHVFpBqkQ_AUoAXoECAIQAw#imgrc=yIVUX2g-MfLEFM",
+                                        "description": "Filete de Robalo a La plancha\r\nAcompa?ado de Arroz blanco, patacones y ensalada."
+                                    },
+                                  ],
+                            "status": "platos encontrados"}
+          404:
+            description: Platos no encontrados.
+            content:
+              'application/json':
+                schema:
+                  type: object
+                  example: {status: "no hay platos"}
+  /platos/nuevoPlato:
+    post:
+      tags:
+      - Platos
+      summary: Agregar plato.
+      description: Añade platos a la base de datos.
+      parameters:
+      - name: Authorization
+        in: header
+        description: Token recibido en el Login.
+        required: true
+        schema:  
+          type: string
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              type: array
+              items:
+                properties:
+                  name:
+                    type: string
+                    example: Frijoles
+                  price:
+                    type: number
+                    example: 18000
+                  img_url:
+                    type: string
+                    example: https://www.google.com/search?q=frijoles&sxsrf=ALeKk03OkdRZhlPpDuqu8Lu46kDWYHocYA:1623863618324&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjc0oix05zxAhXpTTABHS5KATwQ_AUoAXoECAEQAw#imgrc=tHb9PZkpDVfcNM
+                  description:
+                    type: string
+                    example: frijoles con arroz, ensalada, platano y gaseosa
+      responses:
+        200:
+          description: Se añadio correctamente.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"status": "Sucessfull"}
+        400:
+          description: Ocurrio un error en el proceso.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"msg": "error"}
+        403:
+          description: Usuario no autorizado.
+          content:
+            'application/json':
+                schema:
+                  type: object
+                  example: {"msg": "Unauthorized"}
+        422:
+          description: Falta alguna propiedad.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: { "msg": "Error, no se envio el atributo name"}
+  /platos/:id:
+    delete:
+      tags:
+        - Platos
+      summary: Eliminar plato.
+      description: Permite eliminar un plato por su id.
+      parameters:
+      - name: Authorization
+        in: header
+        description: Token recibido en el Login.
+        required: true
+        schema:  
+          type: string
+      responses:
+        200:
+          description: Plato eliminado correctamente.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {'status': "delete sucessfull"}
+        403:
+          description: Usuario no autorizado.
+          content:
+            'application/json':
+                schema:
+                  type: object
+                  example: {"msg": "Unauthorized"}
+        400:
+          description: Error al eliminar plato.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"msg": "error"}
+    put:
+      tags:
+        - Platos
+      summary: Editar plato.
+      description: Permite editar un plato por su id.
+      parameters:
+      - name: Authorization
+        in: header
+        description: Token recibido en el Login.
+        required: true
+        schema:  
+          type: string
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              type: array
+              items:
+                properties:
+                  name:
+                    type: string
+                    example: Frijoles
+                  price:
+                    type: number
+                    example: 18000
+                  img_url:
+                    type: string
+                    example: https://www.google.com/search?q=frijoles&sxsrf=ALeKk03OkdRZhlPpDuqu8Lu46kDWYHocYA:1623863618324&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjc0oix05zxAhXpTTABHS5KATwQ_AUoAXoECAEQAw#imgrc=tHb9PZkpDVfcNM
+                  description:
+                    type: string
+                    example: frijoles con arroz, ensalada, platano y gaseosa
+      responses:
+        200:
+          description: Plato editado correctamente.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"status": "Sucessfull"}
+        400:
+          description: Ocurrio un error en el proceso.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: {"msg": "error"}
+        403:
+          description: Usuario no autorizado.
+          content:
+            'application/json':
+                schema:
+                  type: object
+                  example: {"msg": "Unauthorized"}
+        422:
+          description: Falta alguna propiedad.
+          content:
+            'application/json':
+              schema:
+                type: object
+                example: { "msg": "Error, no se envio el atributo name"}          
